@@ -1,0 +1,40 @@
+# vim: syntax=spec
+
+%global debug_package %{nil}
+
+Name: libbacktrace
+Version: 1.0
+Release: 0%{?dist}
+Summary: Library to produce symbolic backtraces
+License: BSD
+URL: https://github.com/ianlancetaylor/libbacktrace
+Source: {{{ git_dir_pack }}}
+
+BuildRequires: gcc zlib-devel xz-devel
+
+%description
+Library that may be linked into a C/C++ program to produce symbolic backtraces.
+
+%prep
+{{{ git_dir_setup_macro }}}
+
+%build
+%configure
+%make_build
+
+%install
+%make_install
+
+%files
+
+%package devel
+Summary: Static library and headers for %name
+
+%description devel
+Static library and header files for %name
+
+%files devel
+%doc LICENSE README.md
+%_includedir/*
+%_libdir/*.a
+%exclude %_libdir/*.la
